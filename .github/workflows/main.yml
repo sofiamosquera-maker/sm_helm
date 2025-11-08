@@ -34,9 +34,9 @@ jobs:
      
       - name: Deploy files
         run: |
-          sed -i "s|{{ version }}|${{ github.run_number }}|g" ./mi-chart/Chart.yaml
-          cat ./mi-chart/Chart.yaml
-          helm package ./mi-chart
+          sed -i "s|{{ version }}|${{ github.run_number }}|g" ./sm-chart/Chart.yaml
+          cat ./sm-chart/Chart.yaml
+          helm package ./sm-chart
  
-          helm push ./mi-chart-${{ github.run_number }}.tgz oci://registry-1.docker.io/sofiamosquera
+          helm push ./sm-chart-${{ github.run_number }}.tgz oci://registry-1.docker.io/sofiamosquera
  
