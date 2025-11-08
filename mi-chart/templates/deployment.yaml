@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-deployment-{{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.name }}
+    areanegocio: tecnologia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+        - name: contenedor-principal
+          image: {{ .Values.container.image }}:{{ .Values.container.tag }}  # <-- Reemplaza con la imagen que quieras usar
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.container.port }}
+          resources:
+            requests:
+              cpu: {{ .Values.container.resources.requests.cpu }}
+              memory: {{ .Values.container.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.container.resources.limits.cpu }}
+              memory: {{ .Values.container.resources.limits.memory }}
+          startupProbe:
+            httpGet:
+              path: /startup
+              port: {{ .Values.container.port }}
+            failureThreshold: 5
+            periodSeconds: 10

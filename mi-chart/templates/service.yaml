@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mi-servicio-{{ .Values.name }}
+  namespace: {{ .Values.namespace }}  # Asegúrate de que coincida con tu Deployment
+spec:
+  selector:
+    app: {{ .Values.metadata.labels.app }}  # Debe coincidir con las labels del Deployment
+  ports:
+    - protocol: TCP
+      port: 4000        # Puerto del Service
+      targetPort: {{ .Values.container.port }}  # Puerto del contenedor
+  type: ClusterIP     # Cambia a NodePort o LoadBalancer si quieres acceso externo
