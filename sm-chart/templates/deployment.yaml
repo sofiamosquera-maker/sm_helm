@@ -31,13 +31,13 @@ spec:
               memory: {{ .Values.container.resources.limits.memory }}
           envFrom:
             - configMapRef:
-                name: mi-configmap-{{ .Values.name }}
+              name: mi-configmap-{{ .Values.name }}
           env:
             - name: password
-                valueFrom:
-                    secretKeyRef:
-                    name: password
-                    key: password
+              valueFrom:
+                secretKeyRef:
+                  name: mi-app-secret-{{ .Values.name }}
+                  key: password
           startupProbe:
             httpGet:
               path: /startup
